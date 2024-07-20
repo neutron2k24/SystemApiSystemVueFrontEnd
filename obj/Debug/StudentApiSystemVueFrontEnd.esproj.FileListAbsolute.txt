@@ -1,1 +1,2 @@
 E:\web development\Vue3\SphinxAiStudentSystem\StudentSystemFrontEnd\obj\Debug\StudentApiSystemVueFrontEnd.esproj.CoreCompileInputs.cache
+D:\work\StudentApiSystem\vue\SystemApiSystemVueFrontEnd\obj\Debug\StudentApiSystemVueFrontEnd.esproj.CoreCompileInputs.cache

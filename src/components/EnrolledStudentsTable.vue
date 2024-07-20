@@ -1,6 +1,8 @@
 <script setup>
 
     import { ref } from 'vue';
+    import { format } from 'date-fns';
+
     import { getJsonObjectFromAPI } from '../fetch-api-functions.js';
 
     const props = defineProps(['courseId', 'enrolledStudents']);
@@ -10,12 +12,16 @@
     let selectedStudent = ref(null);
 
     //get students on load
-    getStudents(0);
+    getStudents();
 
-    //Retrieve course from API.
-    function getStudents(page) {
-        getJsonObjectFromAPI('/Students/?pageIndex=0&pageSize=0&includeEnrollments=false').then(result => {
-            students.value = result;
+    //Retrieve students from API.
+    function getStudents() {
+        getJsonObjectFromAPI('/Students/?pageIndex=0&pageSize=0&includeEnrollments=false').then(res => {
+            if (res != null && res.ok) {
+                res.json().then(result => {
+                    students.value = result;
+                });
+            }
         });
     }
 
@@ -57,12 +63,14 @@
                             <th>Forename</th>
                             <th>Surname</th>
                             <th>Email</th>
+                            <th>Enrolled</th>
                             <th width="50"></th>
                         </tr>
                         <tr v-for="enrolledStudent in enrolledStudents" :key="enrolledStudent.courseEnrollmentId">
                             <td>{{enrolledStudent.student.forename}}</td>
                             <td>{{enrolledStudent.student.surname}}</td>
                             <td>{{enrolledStudent.student.emailAddress}}</td>
+                            <td>{{format(enrolledStudent.enrollmentDate, 'dd/MM/yyyy')}}</td>
                             <td><button class="btn btn-link text-red" @click="$emit('removeEnrolledStudent', enrolledStudent.courseEnrollmentId)"><font-awesome-icon :icon="['fas', 'trash']" /></button></td>
                         </tr>
                     </table>

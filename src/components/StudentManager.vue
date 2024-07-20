@@ -27,7 +27,7 @@
     //get students on load
     getStudents(0);
 
-    //Retrieve course from API.
+    //Retrieve students from API.
     function getStudents(page) {
         loading.value = true;
        

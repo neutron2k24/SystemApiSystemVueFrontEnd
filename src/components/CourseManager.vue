@@ -33,7 +33,6 @@
 
     //Retrieve course from API.
     function getCourses(page) {
-        statusMessage.value = null;
         loading.value = true;
         getJsonObjectFromAPI('/Courses/?pageIndex=' + page + '&pageSize=' + pageSize + '&includeStudents=true').then(res => {
             if(res != null && res.ok) {

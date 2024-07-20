@@ -1,5 +1,5 @@
 <script setup>
-    import { ref } from 'vue';
+    import { ref, onMounted } from 'vue';
     import StudentTable from './StudentTable.vue';
     import Pagination from './Pagination.vue';
     import AppModal from './AppModal.vue';
@@ -14,6 +14,8 @@
     let alertType =ref(null);
     let appModal = ref(null);
     let studentDetailsForm = ref(null);
+    let currentSortBy = ref('surname');
+    let currentSortDir = ref('ascending');
 
     //Pagination
     const pageSize = 10;
@@ -24,14 +26,11 @@
     //Last student entry id we performed an action on
     let lastStudentActionId = -1;
 
-    //get students on load
-    getStudents(0);
-
     //Retrieve students from API.
     function getStudents(page) {
         loading.value = true;
        
-        getJsonObjectFromAPI('/Students/?pageIndex=' + page + ' & pageSize=' + pageSize + '&includeEnrollments=false').then(res => {
+        getJsonObjectFromAPI('/Students/?pageIndex=' + page + ' & pageSize=' + pageSize + '&sortBy=' + currentSortBy.value + '&sortDir=' + currentSortDir.value + '&includeEnrollments=false').then(res => {
             if(res != null && res.ok) {
                 res.json().then(result => {
                     students.value = result;
@@ -39,7 +38,7 @@
                     totalPages = result.pageCount;
                     setTimeout(() => {
                         loading.value = false;
-                    },2000);
+                    },500);
                 });
             }
             else {
@@ -124,10 +123,26 @@
         statusMessage.value = null;
     }
 
+    //function to apply sorting
+    function applySort(sortBy) {
+        if (sortBy != currentSortBy.value)
+            currentSortDir.value = 'ascending';
+        else
+            currentSortDir.value = currentSortDir.value == 'ascending' ? 'descending' : 'ascending';
+
+        currentSortBy.value = sortBy;
+        getStudents(0);
+    }
+
     //Expose functions
     defineExpose({
         getStudents,
         clearStatusMessage
+    });
+
+    onMounted(() => {
+        //get students when ready
+        getStudents(0);
     });
 </script>
 
@@ -152,7 +167,7 @@
                     </div>
                 </div>
 
-                <StudentTable :students="students" @remove-student-entry="removeStudent" @update-student-details="updateStudent" />
+                <StudentTable :students="students" @remove-student-entry="removeStudent" @update-student-details="updateStudent" @apply-sort="applySort" />
                 <Pagination ref="pager" :total-pages="totalPages" :page-index="pageIndex" @change-page="getStudents" />
             </div>
         </article>

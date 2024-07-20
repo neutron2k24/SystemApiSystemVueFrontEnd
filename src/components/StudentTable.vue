@@ -2,7 +2,7 @@
     import { ref } from 'vue';
 
     const props = defineProps(['students']);
-    const emit = defineEmits(['updateStudentDetails','removeStudentEntry']);
+    const emit = defineEmits(['updateStudentDetails', 'removeStudentEntry', 'applySort']);
 
     const editingStudentId = ref(0);
 
@@ -13,6 +13,11 @@
     function cancelEditing() {
         editingStudentId.value = 0;
     }
+
+    function formateDateForInput(date) {
+        var processed = new Date(date);
+        return processed.toISOString().split('T')[0];
+    }
 </script>
 
 <template>
@@ -20,10 +25,12 @@
         <table class="table table-hover table-bordered">
             <thead>
                 <tr>
-                    <th>Forename</th>
-                    <th>Surname</th>
-                    <th>Gender</th>
-                    <th>Email</th>
+
+                    <th><button @click="$emit('applySort', 'forename')" class="btn btn-link"><font-awesome-icon :icon="['fas', 'sort']" /> Forename</button></th>
+                    <th><button @click="$emit('applySort', 'surname')" class="btn btn-link"><font-awesome-icon :icon="['fas', 'sort']" /> Surname</button></th>
+                    <th><button @click="$emit('applySort', 'gender')" class="btn btn-link"><font-awesome-icon :icon="['fas', 'sort']" /> Gender</button></th>
+                    <th><button @click="$emit('applySort', 'email')" class="btn btn-link"><font-awesome-icon :icon="['fas', 'sort']" /> Email</button></th>
+                    <th><button @click="$emit('applySort', 'dateOfBirth')" class="btn btn-link"><font-awesome-icon :icon="['fas', 'sort']" /> Date Of Birth</button></th>
                 </tr>
             </thead>
             <tbody>
@@ -38,6 +45,7 @@
                         </select>
                     </td>
                     <td><input type="email" placeholder="Email Address" v-model="student.emailAddress" class="form-control" :disabled="student.studentId != editingStudentId" required /></td>
+                    <td><input type="date" placeholder="Date Of Birth" :value="formateDateForInput(student.dateOfBirth)" @input="student.dateOfBirth = $event.target.value" class="form-control" :disabled="student.studentId != editingStudentId"  required /></td>
                     <td class="text-end" width="120">
                         <!-- edit -->
                         <button class="btn btn-warning mx-1" @click="editStudent(student.studentId)" v-if="editingStudentId == 0"><font-awesome-icon :icon="['fas', 'pencil']" /></button>

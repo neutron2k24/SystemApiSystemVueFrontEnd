@@ -3,7 +3,7 @@
     import EnrolledStudentsTable from './EnrolledStudentsTable.vue';
 
     const props = defineProps(['courses']);
-    const emit = defineEmits(['removeEnrolledStudent','removeCourseEntry','enrollStudent']);
+    const emit = defineEmits(['removeEnrolledStudent','removeCourseEntry','enrollStudent', 'applySort']);
 
     const editingCourseId = ref(0);
 
@@ -21,8 +21,7 @@
 
     function removeEnrolledStudent(courseEnrollmentId) {
         emit('removeEnrolledStudent', courseEnrollmentId);
-    }
-   
+    }   
 </script>
 
 <template>
@@ -31,8 +30,8 @@
             <thead>
                 <tr>
                     <th width="32"></th>
-                    <th>Course Title</th>
-                    <th>Qualification</th>
+                    <th><button @click="$emit('applySort', 'title')" class="btn btn-link"><font-awesome-icon :icon="['fas', 'sort']" /> Course Title</button></th>
+                    <th><button @click="$emit('applySort', 'qualification')" class="btn btn-link"><font-awesome-icon :icon="['fas', 'sort']" /> Qualification</button></th>
                     <td>&nbsp;</td>
                 </tr>
             </thead>

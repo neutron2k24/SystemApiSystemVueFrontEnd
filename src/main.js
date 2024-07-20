@@ -12,8 +12,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 /* import specific icons */
-import { faCirclePlus, faTrash, faArrowsRotate, faPencil, faCheck, faClose, faChevronRight, faCircleChevronRight, faGear, faGraduationCap, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faTrash, faArrowsRotate, faPencil, faCheck, faClose, faChevronRight, faCircleChevronRight, faGear, faGraduationCap, faUser, faSort } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faCirclePlus, faTrash, faArrowsRotate, faPencil, faCheck, faClose, faChevronRight, faCircleChevronRight, faGear, faGraduationCap, faUser);
+library.add(faCirclePlus, faTrash, faArrowsRotate, faPencil, faCheck, faClose, faChevronRight, faCircleChevronRight, faGear, faGraduationCap, faUser, faSort);
 
 createApp(App).component('font-awesome-icon', FontAwesomeIcon).mount('#app')

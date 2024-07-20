@@ -1,5 +1,5 @@
 <script setup>
-    import { ref } from 'vue';
+    import { ref, onMounted  } from 'vue';
     import CourseDetailsForm from './CourseDetailsForm.vue';
     import CourseTable from './CourseTable.vue';
     import Pagination from './Pagination.vue';
@@ -15,6 +15,9 @@
     let courses = ref([]);
     let courseDetailsForm = ref(null);
     let appModal = ref(null);
+    let courseTable = ref(null);
+    let currentSortBy = ref('title');
+    let currentSortDir = ref('ascending');
 
     //Pagination
     const pageSize = 10;
@@ -28,13 +31,10 @@
     //Last courseEnrollment
     let lastCourseEnrollmentActionId = -1;
 
-    //get courses on load
-    getCourses(0);
-
     //Retrieve course from API.
     function getCourses(page) {
         loading.value = true;
-        getJsonObjectFromAPI('/Courses/?pageIndex=' + page + '&pageSize=' + pageSize + '&includeStudents=true').then(res => {
+        getJsonObjectFromAPI('/Courses/?pageIndex=' + page + '&pageSize=' + pageSize + '&sortBy=' + currentSortBy.value + '&sortDir=' + currentSortDir.value + '&includeStudents=true').then(res => {
             if(res != null && res.ok) {
                 res.json().then(result => {
                     courses.value = result;
@@ -42,7 +42,7 @@
                     totalPages = result.pageCount;
                     setTimeout(() => {
                         loading.value = false;
-                    },2000);
+                    },500);
                 });
             }
             else {
@@ -161,6 +161,17 @@
         }
     }
 
+    //function to apply sorting
+    function applySort(sortBy) {
+        if(sortBy != currentSortBy.value) 
+            currentSortDir.value = 'ascending';
+        else 
+            currentSortDir.value = currentSortDir.value == 'ascending' ? 'descending' : 'ascending';
+
+        currentSortBy.value = sortBy;
+        getCourses(0);
+    }
+
     //Clear status message
     function clearStatusMessage() {
         statusMessage.value = null;
@@ -171,6 +182,12 @@
         getCourses,
         clearStatusMessage
     });
+
+    onMounted(() => {
+        //get courses on load
+        getCourses(0);
+    });
+    
 </script>
 
 <template>
@@ -179,7 +196,6 @@
             <header>
                 <h1>Course Manager</h1>
             </header>
-
             <AlertMessage ref="alertMessage" :message="statusMessage" :alert-type="alertType" @clear-alert="clearStatusMessage" />
             <div class="preloader" v-if="loading"><img src="@/assets/preloader.png" /></div>
             <div class="wrapper" v-else>
@@ -194,7 +210,7 @@
                     </div>
                 </div>
 
-                <CourseTable :courses="courses" @remove-course-entry="removeCourse" @update-course-details="updateCourse" @enroll-student="enrollStudent" @remove-enrolled-student="removeEnrollment" />
+                <CourseTable ref="courseTable" :courses="courses" @remove-course-entry="removeCourse" @update-course-details="updateCourse" @enroll-student="enrollStudent" @remove-enrolled-student="removeEnrollment" @apply-sort="applySort" />
 
                 <Pagination ref="pager" :total-pages="totalPages" :page-index="pageIndex" @change-page="getCourses" />
 

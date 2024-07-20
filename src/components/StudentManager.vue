@@ -138,7 +138,7 @@
                 <h1>Student Manager</h1>
             </header>
             <AlertMessage ref="alertMessage" :message="statusMessage" :alert-type="alertType" @clear-alert="clearStatusMessage" />
-            <div class="preloader" v-if="loading"><img src="/images/preloader.png" /></div>
+            <div class="preloader" v-if="loading"><img src="@/assets/preloader.png" /></div>
             <div class="wrapper" v-else>
 
                 <div class="controls">

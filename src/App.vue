@@ -30,7 +30,7 @@
         <header id="site-header" class="px-3 py-5">
             <div class="row">
                 <div class="col-6">
-                    <img src="/images/logo.png" alt="Student Plus" class="img-fluid" />
+                    <img src="@/assets/logo.png" alt="Student Plus" class="img-fluid" />
                 </div>
             </div>
         </header>

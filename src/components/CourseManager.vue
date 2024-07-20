@@ -178,10 +178,10 @@
         <article>
             <header>
                 <h1>Course Manager</h1>
-            </header>           
+            </header>
 
             <AlertMessage ref="alertMessage" :message="statusMessage" :alert-type="alertType" @clear-alert="clearStatusMessage" />
-            <div class="preloader" v-if="loading"><img src="/images/preloader.png" /></div>
+            <div class="preloader" v-if="loading"><img src="@/assets/preloader.png" /></div>
             <div class="wrapper" v-else>
                 <div class="controls">
                     <div class="row align-items-center">

@@ -1,0 +1,21 @@
+
+:root { 
+    --student-green: #51d099;
+}
+
+body { background-color: #fff;  }
+#app { min-height: 100%; }
+.container { background-color: #fff;}
+.preloader { display: flex; height:100%; align-items: center; justify-content: center; height: 400px; }
+
+a, .page-link {  color: var(--student-green) !important; }
+    .active > .page-link { background-color: var(--student-green) !important; border-color: var(--student-green) !important; color: #fff !important; }
+    
+    .nav-link { color: inherit !important; width: 100%; text-align: left; padding: 1rem 0; }
+    .nav-link.active { color: var(--student-green) !important; border-bottom: solid 2px var(--student-green); }
+
+.controls { padding: 1rem; margin-top: 1rem; margin-bottom: 1rem; background-color: var(--bs-secondary-bg); }
+
+tr > td:first-child > .btn-link > svg { transition: all 0.2s ease-in-out; }
+tr > td:first-child > .btn-link > svg { transform: rotate(90deg); }
+tr > td:first-child > .btn-link.collapsed > svg { transform: none; }

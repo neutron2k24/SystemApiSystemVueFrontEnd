@@ -1,0 +1,1 @@
+E:\web development\Vue3\SphinxAiStudentSystem\StudentSystemFrontEnd\obj\Release\StudentSystemFrontend.esproj.CoreCompileInputs.cache

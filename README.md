@@ -1,7 +1,12 @@
 <h1>Student Api System Vue3 Sample</h1>
 
+
+<h3>Current Build on GitPages</h3>
 Current Build Version available on Github Pages: https://neutron2k24.github.io/SystemApiSystemVueFrontEnd/
 
+The StudentApiSystem must be running on https://localhost:7060/api
+
+<h3>Description</h3>
 This Vue3 project demonstrates interaction with the StudentSystemApi project.
 
 Add the project to a new VS2022 solution along with the SystemSystemApi project. 
